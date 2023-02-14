@@ -16,17 +16,24 @@ const bus = useEventBus<string>('news')
 const listener = (event: string) => {
   console.log(`news: ${event}`)
 }
+const specificListener = (event: string) => {
+  console.log(`news(specific): ${event}`)
+}
 
 // listen to an event
 const unsubscribe = bus.on(listener)
+const unsubscribeSpecific = bus.on('specific', specificListener)
 
 // fire an event
 bus.emit('The Tokyo Olympics has begun')
+bus.emit('specific', 'The China Olympics has begun')
 
 // unregister the listener
 unsubscribe()
+unsubscribeSpecific()
 // or
 bus.off(listener)
+bus.off('specific', specificListener)
 
 // clearing all listeners
 bus.reset()
